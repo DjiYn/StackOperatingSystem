@@ -1,4 +1,6 @@
-﻿namespace StackOperatingSystem.VirtualMachines
+﻿using System.Text.RegularExpressions;
+
+namespace StackOperatingSystem.VirtualMachines
 {
     public class VirtualMachine
     {
@@ -51,16 +53,21 @@
             
         }
 
-        public void loadFromFile(string fileName)
+        public void loadFromHardDrive()
         {
-            fileName = @"..\..\..\Devices\HardDrive.txt";
+            string fileName = @"..\..\..\Devices\HardDrive.txt";
             if (File.Exists(fileName))
             {
                 string text = File.ReadAllText(fileName);
-                text.
+                int endingOfProgram = text.IndexOf("$END");
+                string loadedProgram = text.Substring(0, endingOfProgram);
 
+                // Fixing syntax to prepare to load to memory
+                loadedProgram = loadedProgram.Replace("\n", "").Replace("\r", "").Replace(" ", "");
 
+                Console.WriteLine(loadedProgram);
 
+                
             } else
             {
                 Console.WriteLine("File did not load!");

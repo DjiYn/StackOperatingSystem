@@ -9,7 +9,7 @@ namespace StackOperatingSystem
         {
             Console.WriteLine("Stack Operating System!");
             VirtualMachine vm = new VirtualMachine();
-            vm.loadFromFile("");
+            vm.loadFromHardDrive();
         }
     }
 }

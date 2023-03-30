@@ -1,4 +1,5 @@
-﻿using System;
+﻿using StackOperatingSystem.Utilities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -47,7 +48,7 @@ namespace StackOperatingSystem.VirtualMachines
 
         public char[] readWordFromStack(char[] SP)
         {
-            int SPDecimalValue = convertHexToInt(SP);
+            int SPDecimalValue = Conversion.convertHexToInt(SP);
             char[] data = new char[Settings.wordSize];
             
             for(int i = 0; i < Settings.wordSize; i++)
@@ -60,26 +61,12 @@ namespace StackOperatingSystem.VirtualMachines
 
         public void writeWordToStack(char[] SP, char[] word)
         {
-            int SPDecimalValue = convertHexToInt(SP);
+            int SPDecimalValue = Conversion.convertHexToInt(SP);
             
             for (int i = 0; i < Settings.wordSize; i++)
             {
                 this.vMemory[SPDecimalValue + i] = word[i];
             }
-        }
-
-        public int convertHexToInt(char[] text)
-        {
-            int value = Convert.ToInt32(text.ToString(), 16);
-
-            return value;
-        }
-
-        public char[] convertIntToHex(int number)
-        {
-            char[] value = string.Format("{0:x}", number).ToUpper().ToCharArray();
-
-            return value;
         }
 
     }
