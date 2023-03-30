@@ -11,5 +11,12 @@ namespace StackOperatingSystem.VirtualMachines
         public VirtualProcessor() 
         {
         }
+
+        public void readCommand (VirtualMemory vRAM)
+        {
+
+        }
+
+
     }
 }

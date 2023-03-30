@@ -20,14 +20,14 @@
             this.vProcessor = new VirtualProcessor();
         }
 
-        public VirtualMachine(char[] SP, char[] IC)
+        public VirtualMachine(char[] SP, char[] IC, char[] memory)
         {
             // Can make a test if SP, IC registers are bigger size than usual.
 
             this.regSP = SP;
             this.regIC = IC;
 
-            this.vRAM = new VirtualMemory();
+            this.vRAM = new VirtualMemory(memory);
             this.vProcessor = new VirtualProcessor();
         }
 
@@ -39,6 +39,29 @@
         public void setIC(char[] IC)
         {
             this.regIC = IC;
+        }
+
+        public void loadToMemory(char[] vRAM)
+        {
+            //this.vRAM.loadMemory(vRAM);
+        }
+
+        public void startVirtualMachine()
+        {
+            
+        }
+
+        public void loadFromFile(string fileName)
+        {
+            fileName = @"..\..\..\Devices\HardDrive.txt";
+            if (File.Exists(fileName))
+            {
+                string text = File.ReadAllText(fileName);
+                Console.WriteLine(text);
+            } else
+            {
+                Console.WriteLine("File did not load!");
+            }
         }
 
     }
