@@ -57,11 +57,8 @@
             if (File.Exists(fileName))
             {
                 string text = File.ReadAllText(fileName);
-                //Console.WriteLine(text);
+                text.
 
-
-                
-                Console.WriteLine(vRAM.convertIntToHex(123));
 
 
             } else
