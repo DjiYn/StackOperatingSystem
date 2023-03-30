@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using StackOperatingSystem.Utilities;
+using System.Text.RegularExpressions;
 
 namespace StackOperatingSystem.VirtualMachines
 {
@@ -15,8 +16,12 @@ namespace StackOperatingSystem.VirtualMachines
         {
             this.regSP = new char[Settings.SPSIZE];
             this.regIC = new char[Settings.ICSIZE];
-            this.regSP[0] = '0';
-            this.regIC[0] = '0';
+
+            for(int i = 0;  i < this.regSP.Length; i++)
+                this.regSP[i] = 'A';
+
+            for (int i = 0; i < this.regIC.Length; i++)
+                this.regIC[i] = '0';
 
             this.vRAM = new VirtualMemory();
             this.vProcessor = new VirtualProcessor();
@@ -38,9 +43,27 @@ namespace StackOperatingSystem.VirtualMachines
             this.regSP = SP;
         }
 
+        public string getSP()
+        {
+            return new string(this.regSP);
+        }
+
         public void setIC(char[] IC)
         {
             this.regIC = IC;
+        }
+
+        public char[] getIC()
+        {
+            return this.regIC;
+        }
+
+        public void increaseByOneSP()
+        {
+            int addOne = Conversion.convertHexToInt(this.regSP);
+            addOne = addOne + 1;
+            Console.WriteLine(addOne);
+            this.regSP = Conversion.convertIntToHex(addOne);
         }
 
         public void loadToMemory(char[] vRAM)
@@ -55,6 +78,7 @@ namespace StackOperatingSystem.VirtualMachines
 
         public void loadFromHardDrive()
         {
+            
             string fileName = @"..\..\..\Devices\HardDrive.txt";
             if (File.Exists(fileName))
             {
@@ -67,7 +91,21 @@ namespace StackOperatingSystem.VirtualMachines
 
                 Console.WriteLine(loadedProgram);
 
+                for (int i = 0; i < loadedProgram.Length; i = i + Settings.wordSize)
+                {
+                    char[] wordToWrite = new char[Settings.wordSize];
+                    for (int j = 0; j < Settings.wordSize; j++)
+                    {
+                        if (i + j < loadedProgram.Length)
+                            wordToWrite[j] = loadedProgram[i + j];
+                    }
+                    Console.WriteLine(Conversion.convertHexToInt(this.regSP));
+                    vRAM.writeWordToStack(this.regSP, wordToWrite);
+                    this.increaseByOneSP();
+                }
+
                 
+                Console.WriteLine(vRAM.readMemory());
             } else
             {
                 Console.WriteLine("File did not load!");
