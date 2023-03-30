@@ -1,4 +1,4 @@
-﻿using StackOperatingSystem.Virtual_Machine;
+﻿using StackOperatingSystem.VirtualMachines;
 
 namespace StackOperatingSystem
 {
