@@ -8,8 +8,12 @@ namespace StackOperatingSystem
 {
     static class Settings
     {
-        public const int blockSize = 256;
-        public const int blockWordSize = 256;
-        public const int wordSize = 4;
+        public static int blockSize = 256;
+        public static int blockWordSize = 256;
+        public static int wordSize = 4;
+
+
+        public static int SPSIZE = 4;
+        public static int ICSIZE = 2;
     }
 }

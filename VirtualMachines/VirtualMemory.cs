@@ -8,5 +8,8 @@ namespace StackOperatingSystem.VirtualMachines
 {
     internal class VirtualMemory
     {
+        public VirtualMemory() { }
+
+
     }
 }
