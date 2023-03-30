@@ -1,6 +1,6 @@
-﻿namespace StackOperatingSystem.VirtualMachine
+﻿namespace StackOperatingSystem.Virtual_Machine
 {
-    internal class VirtualMachine
+    public class VirtualMachine
     {
         public VirtualMachine()
         {

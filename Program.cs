@@ -1,6 +1,8 @@
-﻿namespace StackOperatingSystem
+﻿using StackOperatingSystem.Virtual_Machine;
+
+namespace StackOperatingSystem
 {
-    internal class Program
+    class Program
     {
         static void Main(string[] args)
         {
