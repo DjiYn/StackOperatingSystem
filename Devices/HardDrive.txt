@@ -1,0 +1,23 @@
+﻿$$$$
+SUDEK10PLIUS20
+$AMJ
+DATASEGM
+10
+20
+CODESEGM
+PUSH 00 01 // įveda skaičių 10 į stack’ą.
+PUSH 01 02 // įveda skaičių 20 į stack’ą.
+ADDD
+PDRB // išveda kiek bus 10 + 20 į ekraną.
+HALT
+$END
+
+$$$$
+PRG2
+$AMJ
+DATASEGM
+CODESEGM
+PUSH 00 00 // Įkiša į stack’a kodo eilutę  į kurią turi peršokti.
+JMPP  // Šoka į kodo segmento pradžią.
+HALT
+$END

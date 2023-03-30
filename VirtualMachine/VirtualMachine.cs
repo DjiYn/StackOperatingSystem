@@ -7,3 +7,4 @@
             Console.WriteLine("Hello From virtual machine!");
         }
     }
+}

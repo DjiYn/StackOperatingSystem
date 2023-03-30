@@ -8,7 +8,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Virtual Machine\" />
+    <Compile Remove="Virtual Machine\**" />
+    <EmbeddedResource Remove="Virtual Machine\**" />
+    <None Remove="Virtual Machine\**" />
   </ItemGroup>
 
 </Project>

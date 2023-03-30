@@ -1,6 +1,4 @@
-﻿using StackOperatingSystem.VirtualMachine;
-
-namespace StackOperatingSystem
+﻿namespace StackOperatingSystem
 {
     internal class Program
     {
