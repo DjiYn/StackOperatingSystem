@@ -57,7 +57,13 @@
             if (File.Exists(fileName))
             {
                 string text = File.ReadAllText(fileName);
-                Console.WriteLine(text);
+                //Console.WriteLine(text);
+
+
+                
+                Console.WriteLine(vRAM.convertIntToHex(123));
+
+
             } else
             {
                 Console.WriteLine("File did not load!");
