@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace StackOperatingSystem.RealMachines
 {
-    internal class RealMemory
+    class RealMemory
     {
+        char[] rMemory;
+
+        public RealMemory(int size)
+        {
+            rMemory = new char[size];
+        }
     }
 }

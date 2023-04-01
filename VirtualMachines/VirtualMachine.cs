@@ -14,66 +14,36 @@ namespace StackOperatingSystem.VirtualMachines
 
         public VirtualMachine()
         {
-            this.regSP = new char[Settings.SPSIZE];
-            this.regIC = new char[Settings.ICSIZE];
+            regSP = new char[Settings.vSPSIZE];
+            regIC = new char[Settings.vICSIZE];
 
-            for(int i = 0;  i < this.regSP.Length; i++)
-                this.regSP[i] = 'A';
+            for (int i = 0;  i < regSP.Length; i++)
+                this.regSP[i] = '0';
 
             for (int i = 0; i < this.regIC.Length; i++)
                 this.regIC[i] = '0';
 
-            this.vRAM = new VirtualMemory();
+            this.vRAM = new VirtualMemory(Settings.vMEMORYSIZE);
             this.vProcessor = new VirtualProcessor();
-        }
-
-        public VirtualMachine(char[] SP, char[] IC, char[] memory)
-        {
-            // Can make a test if SP, IC registers are bigger size than usual.
-
-            this.regSP = SP;
-            this.regIC = IC;
-
-            this.vRAM = new VirtualMemory(memory);
-            this.vProcessor = new VirtualProcessor();
-        }
-
-        public void setSP(char[] SP) 
-        {
-            this.regSP = SP;
-        }
-
-        public string getSP()
-        {
-            return new string(this.regSP);
-        }
-
-        public void setIC(char[] IC)
-        {
-            this.regIC = IC;
-        }
-
-        public char[] getIC()
-        {
-            return this.regIC;
         }
 
         public void increaseByOneSP()
         {
             int addOne = Conversion.convertHexToInt(this.regSP);
             addOne = addOne + 1;
-            Console.WriteLine(addOne);
             this.regSP = Conversion.convertIntToHex(addOne);
         }
 
-        public void loadToMemory(char[] vRAM)
+        public void increaseByOneIC()
         {
-            //this.vRAM.loadMemory(vRAM);
+            int addOne = Conversion.convertHexToInt(this.regIC);
+            addOne = addOne + 1;
+            this.regIC = Conversion.convertIntToHex(addOne);
         }
 
-        public void startVirtualMachine()
+        public void writeMemory(char[] memory)
         {
-            
+            vRAM.writeMemory(memory);
         }
 
         public void loadFromHardDrive()
@@ -89,8 +59,6 @@ namespace StackOperatingSystem.VirtualMachines
                 // Fixing syntax to prepare to load to memory
                 loadedProgram = loadedProgram.Replace("\n", "").Replace("\r", "").Replace(" ", "");
 
-                Console.WriteLine(loadedProgram);
-
                 for (int i = 0; i < loadedProgram.Length; i = i + Settings.wordSize)
                 {
                     char[] wordToWrite = new char[Settings.wordSize];
@@ -99,18 +67,13 @@ namespace StackOperatingSystem.VirtualMachines
                         if (i + j < loadedProgram.Length)
                             wordToWrite[j] = loadedProgram[i + j];
                     }
-                    Console.WriteLine(Conversion.convertHexToInt(this.regSP));
-                    vRAM.writeWordToStack(this.regSP, wordToWrite);
+                    vRAM.writeWordToStack(regSP, wordToWrite);
                     this.increaseByOneSP();
                 }
-
-                
-                Console.WriteLine(vRAM.readMemory());
             } else
             {
                 Console.WriteLine("File did not load!");
             }
         }
-
     }
 }

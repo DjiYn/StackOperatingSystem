@@ -6,7 +6,12 @@ using System.Threading.Tasks;
 
 namespace StackOperatingSystem.RealMachines
 {
-    internal class SwapMemory
+    public class SwapMemory
     {
+        char[] sMemory;
+        public SwapMemory(int size) 
+        { 
+            sMemory = new char[size];
+        }
     }
 }

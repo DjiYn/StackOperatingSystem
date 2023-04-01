@@ -12,25 +12,19 @@ namespace StackOperatingSystem.VirtualMachines
         
         char[] vMemory;
 
-        public VirtualMemory() 
+        public VirtualMemory(int size) 
         { 
-            this.vMemory = new char[Settings.blockSize*Settings.wordSize];
-        }
-        public VirtualMemory(char[] progMemory) 
-        { 
-            this.vMemory = new char[Settings.blockSize*Settings.wordSize];
-            this.vMemory = progMemory;
+            this.vMemory = new char[size];
         }
 
         public char readByte(int address)
         {
-
             return this.vMemory[address];
         }
 
-        public void writeByte(int address, char simbole)
+        public void writeByte(int address, char data)
         {
-            this.vMemory[address]= simbole;
+            this.vMemory[address]= data;
         }
 
         public char[] readMemory()
@@ -38,20 +32,17 @@ namespace StackOperatingSystem.VirtualMachines
             return this.vMemory;
         }
 
-        // public void writeMemory(char[] text)
-        // {
-        //     if(text.Length < Settings.blockSize*Settings.wordSize)
-        //     {
-        //        this.vMemory = text; 
-        //     }
-        // }
+        public void writeMemory(char[] memory)
+        {
+            this.vMemory = memory;
+        }
 
         public char[] readWordFromStack(char[] SP)
         {
             int SPDecimalValue = Conversion.convertHexToInt(SP);
-            char[] data = new char[Settings.wordSize];
+            char[] data = new char[Settings.vWORDSIZE];
             
-            for(int i = 0; i < Settings.wordSize; i++)
+            for(int i = 0; i < Settings.vWORDSIZE; i++)
             {
                 data[i] = this.vMemory[SPDecimalValue + i];
             }
@@ -62,8 +53,8 @@ namespace StackOperatingSystem.VirtualMachines
         public void writeWordToStack(char[] SP, char[] word)
         {
             int SPDecimalValue = Conversion.convertHexToInt(SP);
-            
-            for (int i = 0; i < Settings.wordSize; i++)
+
+            for (int i = 0; i < Settings.vWORDSIZE; i++)
             {
                 this.vMemory[SPDecimalValue + i] = word[i];
             }

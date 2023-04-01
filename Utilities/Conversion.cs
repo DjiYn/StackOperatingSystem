@@ -9,13 +9,19 @@ namespace StackOperatingSystem.Utilities
 {
     static class Conversion
     {
-        public static int convertHexToInt(char[] text)
+        public static int convertHexToInt(char[] array)
         {
-            string formated = new string(text);
+            string formated = new string(array);
 
             int value = int.Parse(formated, System.Globalization.NumberStyles.HexNumber);
 
-            return 0; 
+            return value; 
+        }
+
+        public static int convertHexToInt(string array)
+        {
+            int value = int.Parse(array, System.Globalization.NumberStyles.HexNumber);
+            return value;
         }
 
         public static char[] convertIntToHex(int number)
@@ -25,10 +31,6 @@ namespace StackOperatingSystem.Utilities
             return value;
         }
 
-        internal static int convertHexToInt(string v)
-        {
-            int value = int.Parse(v, System.Globalization.NumberStyles.HexNumber);
-            return value;
-        }
+        
     }
 }

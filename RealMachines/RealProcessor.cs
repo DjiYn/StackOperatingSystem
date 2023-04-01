@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace StackOperatingSystem.RealMachines
 {
-    internal class RealProcessor
+    public class RealProcessor
     {
+        public RealProcessor() { }
     }
 }
