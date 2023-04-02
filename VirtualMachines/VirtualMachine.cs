@@ -46,34 +46,5 @@ namespace StackOperatingSystem.VirtualMachines
             vRAM.writeMemory(memory);
         }
 
-        public void loadFromHardDrive()
-        {
-            
-            string fileName = @"..\..\..\Devices\HardDrive.txt";
-            if (File.Exists(fileName))
-            {
-                string text = File.ReadAllText(fileName);
-                int endingOfProgram = text.IndexOf("$END");
-                string loadedProgram = text.Substring(0, endingOfProgram);
-
-                // Fixing syntax to prepare to load to memory
-                loadedProgram = loadedProgram.Replace("\n", "").Replace("\r", "").Replace(" ", "");
-
-                for (int i = 0; i < loadedProgram.Length; i = i + Settings.wordSize)
-                {
-                    char[] wordToWrite = new char[Settings.wordSize];
-                    for (int j = 0; j < Settings.wordSize; j++)
-                    {
-                        if (i + j < loadedProgram.Length)
-                            wordToWrite[j] = loadedProgram[i + j];
-                    }
-                    vRAM.writeWordToStack(regSP, wordToWrite);
-                    this.increaseByOneSP();
-                }
-            } else
-            {
-                Console.WriteLine("File did not load!");
-            }
-        }
     }
 }

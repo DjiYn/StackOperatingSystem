@@ -9,36 +9,41 @@ namespace StackOperatingSystem.Devices
 {
     public class HardDrive
     {
-        public HardDrive() { }
-
-
-        public void loadFromHardDrive()
+        private string data;
+        private StringReader reader;
+        public HardDrive() 
         {
+            data = "";
+            loadData();
+            reader = new StringReader(data);
+        }
 
+        public void loadData()
+        {
             string fileName = @"..\..\..\Devices\HardDrive.txt";
+
             if (File.Exists(fileName))
             {
-                string text = File.ReadAllText(fileName);
-                int endingOfProgram = text.IndexOf("$END");
-                string loadedProgram = text.Substring(0, endingOfProgram);
+                string data = File.ReadAllText(fileName);
+                //int endingOfProgram = text.IndexOf("$END");
+                //string loadedProgram = text.Substring(0, endingOfProgram);
 
                 // Fixing syntax to prepare to load to memory
-                loadedProgram = loadedProgram.Replace("\n", "").Replace("\r", "").Replace(" ", "");
-
-                for (int i = 0; i < loadedProgram.Length; i = i + Settings.rWORDSIZE)
-                {
-                    char[] wordToWrite = new char[Settings.rWORDSIZE];
-                    for (int j = 0; j < Settings.rWORDSIZE; j++)
-                    {
-                        if (i + j < loadedProgram.Length)
-                            wordToWrite[j] = loadedProgram[i + j];
-                    }
-                }
+                this.data = data.Replace("\n", "").Replace("\r", "").Replace(" ", "");
             }
             else
             {
                 Console.WriteLine("File did not load!");
             }
+        }
+
+        public char readByte()
+        {
+            if (reader.Peek() != -1)
+            {
+                return (char)reader.Read();
+            }
+            return '\0';
         }
     }
 }

@@ -6,7 +6,13 @@ using System.Threading.Tasks;
 
 namespace StackOperatingSystem.Devices
 {
-    internal class OutputDevice
+    class OutputDevice
     {
+        public OutputDevice() { }
+
+        public void writeByte(char data)
+        {
+            Console.Write(data);
+        }
     }
 }

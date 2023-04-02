@@ -1,4 +1,5 @@
-﻿using StackOperatingSystem.VirtualMachines;
+﻿using StackOperatingSystem.RealMachines;
+using StackOperatingSystem.VirtualMachines;
 using System.Runtime.Intrinsics.X86;
 
 namespace StackOperatingSystem
@@ -8,8 +9,8 @@ namespace StackOperatingSystem
         static void Main(string[] args)
         {
             Console.WriteLine("Stack Operating System!");
-            VirtualMachine vm = new VirtualMachine();
-            vm.loadFromHardDrive();
+            RealMachine machine = new RealMachine();
+            machine.test();
             
         }
     }

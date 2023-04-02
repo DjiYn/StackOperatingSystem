@@ -1,4 +1,6 @@
-﻿using System;
+﻿using StackOperatingSystem.Devices;
+using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,46 +10,45 @@ namespace StackOperatingSystem.RealMachines
 {
     public class RealMachine
     {
-
-        // REGISTERS
-
-        char[] regPTR;
-        char[] regIC;
-        char[] regSP;
-
-
-        // SUPERVISOR REGISTERS
-
-        Boolean isSupervisor;
-        char[] regPI;
-        char[] regSI;
-        char[] regTI;
-
-        RealMemory rMemory;
-        RealProcessor rProcessor;
-        SwapMemory rSwapMemory;
-
-
         PagingMechanism rPagingMechanism;
         ChannelDevice rChannelDevice;
 
+        HardDrive hardDrive;
+        InputDevice inputDevice;
+        OutputDevice outputDevice;
 
+        RealMemory rMemory;
+        SwapMemory rSwapMemory;
+
+        RealProcessor rProcessor;
 
         public RealMachine() 
         {
-            regPTR = new char[Settings.rPTRSIZE];
-            regIC = new char[Settings.rICSIZE];
-            regSP = new char[Settings.rSPSIZE];
+            rPagingMechanism = new PagingMechanism();
+            rChannelDevice = new ChannelDevice();
 
-            isSupervisor = false;
-
-            regPI = new char[Settings.sPISIZE];
-            regSI = new char[Settings.sSISIZE];
-            regTI = new char[Settings.sTISIZE];
+            hardDrive = new HardDrive();
+            inputDevice = new InputDevice();
+            outputDevice = new OutputDevice();
 
             rMemory = new RealMemory(Settings.rMEMORYSIZE);
-            rProcessor = new RealProcessor();
-            rSwapMemory = new SwapMemory(Settings.sSWAPMEMORYSIZE);
+            rSwapMemory = new SwapMemory(Settings.ssSWAPMEMORYSIZE);
+
+            rProcessor = new RealProcessor(rChannelDevice);
+
+            ArrayList objects = new ArrayList();
+            objects.Add(rMemory);
+            objects.Add(hardDrive);
+            objects.Add(rSwapMemory);
+            objects.Add(inputDevice);
+            objects.Add(outputDevice);
+
+            rChannelDevice.setDevices(objects);
+        }
+
+        public void test()
+        {
+            rProcessor.test();
         }
     }
 }
