@@ -1,4 +1,5 @@
-﻿using StackOperatingSystem.Utilities;
+﻿using StackOperatingSystem.Devices;
+using StackOperatingSystem.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,64 +46,67 @@ namespace StackOperatingSystem.RealMachines
 
         public void test()
         {
-            //channelDevice.setST(0x3); // Hard drive -> User mem
-            //channelDevice.setDT(0x1);
-            //channelDevice.setSB(0x0);
-            //channelDevice.setBC(0xFF);
-            //channelDevice.setDB(0x0);
-            //channelDevice.setOS(255);
-            //channelDevice.XCHG();
+            try
+            {
+                channelDevice.setST(0x3); // HD -> Swap
+                channelDevice.setDT(0x4);
+                channelDevice.setSB(0x0);
+                channelDevice.setDB(0x15);
+                channelDevice.setBC(0xFF);
+                channelDevice.setOS(0x10);
+                channelDevice.XCHG();
 
-            //channelDevice.setST(0x1); // User mem -> Output
-            //channelDevice.setDT(0x3);
-            //channelDevice.setSB(0x0);
-            //channelDevice.setDB(0x0);
-            //channelDevice.setBC(0x50);
-            //channelDevice.setOS(0x0);
-            //channelDevice.XCHG();
-
-            //channelDevice.setST(0x1); // User mem -> Super mem
-            //channelDevice.setDT(0x2);
-            //channelDevice.setSB(0x0);
-            //channelDevice.setDB(0x25);
-            //channelDevice.setBC(0x50);
-            //channelDevice.setOS(255);
-            //channelDevice.XCHG();
+                channelDevice.setST(0x5); // Swap -> User mem
+                channelDevice.setDT(0x1);
+                channelDevice.setSB(0x15);
+                channelDevice.setDB(0x30);
+                channelDevice.setBC(0xFF);
+                channelDevice.setOS(0x10);
+                channelDevice.XCHG();
 
 
-            //channelDevice.setST(0x2); // Super mem -> Output
-            //channelDevice.setDT(0x3);
-            //channelDevice.setSB(0x25);
-            //channelDevice.setDB(0x0);
-            //channelDevice.setBC(0x30);
-            //channelDevice.setOS(0x0);
-            //channelDevice.XCHG();
-
-            channelDevice.setST(0x3); // HD -> Swap
-            channelDevice.setDT(0x4);
-            channelDevice.setSB(0x0);
-            channelDevice.setDB(0x15);
-            channelDevice.setBC(0xFF);
-            channelDevice.setOS(0x0);
-            channelDevice.XCHG();
-
-            channelDevice.setST(0x5); // Swap -> User mem
-            channelDevice.setDT(0x1);
-            channelDevice.setSB(0x15);
-            channelDevice.setDB(0x0);
-            channelDevice.setBC(0xFF);
-            channelDevice.setOS(0x0);
-            channelDevice.XCHG();
+                channelDevice.setST(0x1); // User -> Supervisor
+                channelDevice.setDT(0x2);
+                channelDevice.setSB(0x30);
+                channelDevice.setDB(Settings.sSUPERVISORMEMORYSTARTSATBLOCK);
+                channelDevice.setBC(0xFF);
+                channelDevice.setOS(0x0);
+                channelDevice.XCHG();
 
 
-            channelDevice.setST(0x1); // User -> Output
-            channelDevice.setDT(0x3);
-            channelDevice.setSB(0x0);
-            channelDevice.setDB(0x0);
-            channelDevice.setBC(0xFF);
-            channelDevice.setOS(0x0);
-            channelDevice.XCHG();
+                channelDevice.setST(0x2); // supervisor -> Output
+                channelDevice.setDT(0x3);
+                channelDevice.setSB(Settings.sSUPERVISORMEMORYSTARTSATBLOCK);
+                channelDevice.setDB(0);
+                channelDevice.setBC(0xFF);
+                channelDevice.setOS(0x0);
+                channelDevice.XCHG();
 
+
+                channelDevice.setST(0x4); // User input -> user mem
+                channelDevice.setDT(0x1);
+                channelDevice.setSB(0);
+                channelDevice.setDB(55);
+                channelDevice.setBC(0xF);
+                channelDevice.setOS(0x0);
+                channelDevice.XCHG();
+
+                channelDevice.setST(0x1); //  user mem -> output
+                channelDevice.setDT(0x3);
+                channelDevice.setSB(54);
+                channelDevice.setDB(55);
+                channelDevice.setBC(0xFFF);
+                channelDevice.setOS(0x0);
+                channelDevice.XCHG();
+
+            } catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            
+
+
+            //channelDevice.test();
             //char[] regST; // Object to get data from. 1 - User memory, 2 - Supervizor memory, 3 - Outside memory (Hard Drives), 4 - Input device, 5 - Swap memory;
             //char[] regDT; // Object to write data to. 1 - User memory, 2 - Supervizor memory, 3 - Output device, 4 - Swap memory;
             //char[] regSB; // Block number to get data from.

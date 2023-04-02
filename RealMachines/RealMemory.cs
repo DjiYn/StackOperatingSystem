@@ -13,6 +13,11 @@ namespace StackOperatingSystem.RealMachines
         public RealMemory(int userMemorySize)
         {
             rMemory = new char[userMemorySize];
+
+            for(int i = 0; i < userMemorySize; i++) // For raw memory test
+            {
+                rMemory[i] = '?';
+            }
         }
 
         public char readByte(int realMemoryAddress) 
@@ -40,20 +45,5 @@ namespace StackOperatingSystem.RealMachines
         {
             return getWordInBlockIndex(indexBlock, wordIndex) + byteIndex;
         }
-
-
-        //public void writeword(int index, char[] data)
-        //{
-        //    for (int i = 0; i < 4; i++)
-        //        rMemory[index + i] = data[i];
-        //}
-
-        //public char[] readword(int index)
-        //{
-        //    char[] word = new char[4];
-        //    for (int i = 0; i < 4; i++)
-        //        word[i] = rMemory[index + i];
-        //    return word;
-        //}
     }
 }

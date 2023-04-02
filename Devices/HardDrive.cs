@@ -25,8 +25,6 @@ namespace StackOperatingSystem.Devices
             if (File.Exists(fileName))
             {
                 string data = File.ReadAllText(fileName);
-                //int endingOfProgram = text.IndexOf("$END");
-                //string loadedProgram = text.Substring(0, endingOfProgram);
 
                 // Fixing syntax to prepare to load to memory
                 this.data = data.Replace("\n", "").Replace("\r", "").Replace(" ", "");

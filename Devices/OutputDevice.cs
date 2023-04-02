@@ -8,11 +8,21 @@ namespace StackOperatingSystem.Devices
 {
     class OutputDevice
     {
-        public OutputDevice() { }
+        string buffer;
+        public OutputDevice() 
+        {
+            buffer = "";
+        }
 
         public void writeByte(char data)
         {
-            Console.Write(data);
+            buffer += data;
+        }
+
+        public void run()
+        {
+            Console.WriteLine(buffer);
+            buffer = "";
         }
     }
 }

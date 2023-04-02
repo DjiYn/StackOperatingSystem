@@ -50,6 +50,12 @@ namespace StackOperatingSystem.RealMachines
                             break;
 
                         case 2: // Supervisor memory
+                            if (getSB() < Settings.sSUPERVISORMEMORYSTARTSATBLOCK && getDB() < Settings.sSUPERVISORMEMORYSTARTSATBLOCK)
+                            {
+                                throw new Exception("Saving to a non Supervisor memory");
+                                break;
+                            }
+
                             for (int i = 0; i < getBC(); i++)
                             {
                                 ((RealMemory)Devices[0]).writeByte(
@@ -66,6 +72,7 @@ namespace StackOperatingSystem.RealMachines
                                      ((RealMemory)Devices[0]).readByte(((RealMemory)Devices[0]).getBlockIndex(getSB()) + getOS() + i)
                                 );
                             }
+                            ((OutputDevice)Devices[4]).run();
                             break;
 
                         case 4: // Swap memory
@@ -81,6 +88,12 @@ namespace StackOperatingSystem.RealMachines
                     break;
 
                 case 2: // Supervisor memory
+                    if (getSB() < Settings.sSUPERVISORMEMORYSTARTSATBLOCK && getDB() < Settings.sSUPERVISORMEMORYSTARTSATBLOCK)
+                    {
+                        throw new Exception("Saving to a non Supervisor memory");
+                        break;
+                    }
+
                     switch (getDT())
                     {
                         case 1: // User memory
@@ -93,7 +106,7 @@ namespace StackOperatingSystem.RealMachines
                             }
                             break;
 
-                        case 2: // Supervisor memory
+                        case 2: // Supervisor memory        
                             for (int i = 0; i < getBC(); i++)
                             {
                                 ((RealMemory)Devices[0]).writeByte(
@@ -110,6 +123,7 @@ namespace StackOperatingSystem.RealMachines
                                      ((RealMemory)Devices[0]).readByte(((RealMemory)Devices[0]).getBlockIndex(getSB()) + getOS() + i)
                                 );
                             }
+                            ((OutputDevice)Devices[4]).run();
                             break;
 
                         case 4: // Swap memory
@@ -138,6 +152,12 @@ namespace StackOperatingSystem.RealMachines
                             break;
 
                         case 2: // Supervisor memory
+                            if (getSB() < Settings.sSUPERVISORMEMORYSTARTSATBLOCK && getDB() < Settings.sSUPERVISORMEMORYSTARTSATBLOCK)
+                            {
+                                throw new Exception("Saving to a non Supervisor memory");
+                                break;
+                            }
+
                             for (int i = 0; i < getBC(); i++)
                             {
                                 ((RealMemory)Devices[0]).writeByte(
@@ -154,6 +174,7 @@ namespace StackOperatingSystem.RealMachines
                                     ((HardDrive)Devices[1]).readByte()
                                 );
                             }
+                            ((OutputDevice)Devices[4]).run();
                             break;
 
                         case 4: // Swap memory
@@ -169,6 +190,58 @@ namespace StackOperatingSystem.RealMachines
                     break;
 
                 case 4: // Input device
+                    switch (getDT())
+                    {
+                        case 1: // User memory
+                            ((InputDevice)Devices[3]).run();
+                            for (int i = 0; i < getBC(); i++)
+                            {
+                                ((RealMemory)Devices[0]).writeByte(
+                                        ((RealMemory)Devices[0]).getBlockIndex(getDB()) + getOS() + i,
+                                        ((InputDevice)Devices[3]).readByte()
+                                );
+                            }
+                            break;
+
+                        case 2: // Supervisor memory
+                            if (getSB() < Settings.sSUPERVISORMEMORYSTARTSATBLOCK && getDB() < Settings.sSUPERVISORMEMORYSTARTSATBLOCK)
+                            {
+                                throw new Exception("Saving to a non Supervisor memory");
+                                break;
+                            }
+
+                            ((InputDevice)Devices[3]).run();
+                            for (int i = 0; i < getBC(); i++)
+                            {
+                                ((RealMemory)Devices[0]).writeByte(
+                                        ((RealMemory)Devices[0]).getBlockIndex(getDB()) + getOS() + i,
+                                        ((InputDevice)Devices[3]).readByte()
+                                );
+                            }
+                            break;
+
+                        case 3: // Output device
+                            ((InputDevice)Devices[3]).run();
+                            for (int i = 0; i < getBC(); i++)
+                            {
+                                ((OutputDevice)Devices[4]).writeByte(
+                                     ((InputDevice)Devices[3]).readByte()
+                                );
+                            }
+                            ((OutputDevice)Devices[4]).run();
+                            break;
+
+                        case 4: // Swap memory
+                            ((InputDevice)Devices[3]).run();
+                            for (int i = 0; i < getBC(); i++)
+                            {
+                                ((SwapMemory)Devices[2]).writeByte(
+                                    ((SwapMemory)Devices[2]).getBlockIndex(getDB()) + getOS() + i,
+                                    ((InputDevice)Devices[3]).readByte()
+                                );
+                            }
+                            break;
+                    }
                     break;
 
                 case 5: // Swap memory
@@ -185,6 +258,12 @@ namespace StackOperatingSystem.RealMachines
                             break;
 
                         case 2: // Supervisor memory
+                            if (getSB() < Settings.sSUPERVISORMEMORYSTARTSATBLOCK && getDB() < Settings.sSUPERVISORMEMORYSTARTSATBLOCK)
+                            {
+                                throw new Exception("Saving to a non Supervisor memory");
+                                break;
+                            }
+
                             for (int i = 0; i < getBC(); i++)
                             {
                                 ((RealMemory)Devices[0]).writeByte(
@@ -201,6 +280,7 @@ namespace StackOperatingSystem.RealMachines
                                      ((SwapMemory)Devices[2]).readByte(((SwapMemory)Devices[2]).getBlockIndex(getSB()) + getOS() + i)
                                 );
                             }
+                            ((OutputDevice)Devices[4]).run();
                             break;
 
                         case 4: // Swap memory
@@ -329,6 +409,5 @@ namespace StackOperatingSystem.RealMachines
                 regOS = osToSetTo;
             }
         }
-
     }
 }

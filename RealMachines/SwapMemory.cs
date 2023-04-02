@@ -9,9 +9,14 @@ namespace StackOperatingSystem.RealMachines
     public class SwapMemory
     {
         char[] sMemory;
-        public SwapMemory(int size) 
+        public SwapMemory(int swapMemorySize) 
         { 
-            sMemory = new char[size];
+            sMemory = new char[swapMemorySize];
+
+            for (int i = 0; i < swapMemorySize; i++) // For raw memory test
+            {
+                sMemory[i] = '?';
+            }
         }
 
         public char readByte(int index)
