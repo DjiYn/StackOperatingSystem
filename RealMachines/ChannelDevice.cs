@@ -20,6 +20,8 @@ namespace StackOperatingSystem.RealMachines
         char[] regOS; // Offset of the position in the block for writing block.
 
         ArrayList Devices;
+
+        bool isDevicesInicialized;
         public ChannelDevice() 
         {
             regST = new char[Settings.cSTSIZE];
@@ -30,10 +32,14 @@ namespace StackOperatingSystem.RealMachines
             regOS = new char[Settings.cOSSIZE];
 
             Devices = new ArrayList();
+            isDevicesInicialized = false;
         }
 
         public void XCHG()
         {
+            if (!isDevicesInicialized)
+                return;
+
             switch(getST())
             {
                 case 1: // User memory
@@ -301,6 +307,7 @@ namespace StackOperatingSystem.RealMachines
         public void setDevices(ArrayList objects) 
         { 
             this.Devices = objects;
+            this.isDevicesInicialized = true;
         }
 
         int getST()

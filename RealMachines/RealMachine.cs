@@ -1,4 +1,5 @@
 ﻿using StackOperatingSystem.Devices;
+using StackOperatingSystem.VirtualMachines;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -22,9 +23,11 @@ namespace StackOperatingSystem.RealMachines
 
         RealProcessor rProcessor;
 
+        ArrayList virtualMachines;
+
         public RealMachine() 
         {
-            rPagingMechanism = new PagingMechanism();
+            
             rChannelDevice = new ChannelDevice();
 
             hardDrive = new HardDrive();
@@ -33,6 +36,8 @@ namespace StackOperatingSystem.RealMachines
 
             rMemory = new RealMemory(Settings.rMEMORYSIZE);
             rSwapMemory = new SwapMemory(Settings.ssSWAPMEMORYSIZE);
+
+            rPagingMechanism = new PagingMechanism(rMemory);
 
             rProcessor = new RealProcessor(rChannelDevice);
 
@@ -44,6 +49,8 @@ namespace StackOperatingSystem.RealMachines
             objects.Add(outputDevice);
 
             rChannelDevice.setDevices(objects);
+
+            virtualMachines = new ArrayList();
         }
 
         public void test()

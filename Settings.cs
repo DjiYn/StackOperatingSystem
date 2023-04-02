@@ -70,5 +70,11 @@ namespace StackOperatingSystem
         public static int cDBSIZE = 0x2 * cCONTAINSCHARS;
         public static int cBCSIZE = 0x2 * cCONTAINSCHARS;
         public static int cOSSIZE = 0x1 * cCONTAINSCHARS;
+
+        //------------------------------------------------------------------------------
+        // Paging Mechanism
+
+        public static int pPAGESIZE = 0xFF;
+        public static int pNUMBEROFPAGES = vBLOCKS;
     }
 }

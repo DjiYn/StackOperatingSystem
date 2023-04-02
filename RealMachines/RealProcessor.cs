@@ -1,5 +1,6 @@
 ﻿using StackOperatingSystem.Devices;
 using StackOperatingSystem.Utilities;
+using StackOperatingSystem.VirtualMachines;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -48,54 +49,54 @@ namespace StackOperatingSystem.RealMachines
         {
             try
             {
-                channelDevice.setST(0x3); // HD -> Swap
-                channelDevice.setDT(0x4);
-                channelDevice.setSB(0x0);
-                channelDevice.setDB(0x15);
-                channelDevice.setBC(0xFF);
-                channelDevice.setOS(0x10);
-                channelDevice.XCHG();
+                //channelDevice.setST(0x3); // HD -> Swap
+                //channelDevice.setDT(0x4);
+                //channelDevice.setSB(0x0);
+                //channelDevice.setDB(0x15);
+                //channelDevice.setBC(0xFF);
+                //channelDevice.setOS(0x10);
+                //channelDevice.XCHG();
 
-                channelDevice.setST(0x5); // Swap -> User mem
-                channelDevice.setDT(0x1);
-                channelDevice.setSB(0x15);
-                channelDevice.setDB(0x30);
-                channelDevice.setBC(0xFF);
-                channelDevice.setOS(0x10);
-                channelDevice.XCHG();
-
-
-                channelDevice.setST(0x1); // User -> Supervisor
-                channelDevice.setDT(0x2);
-                channelDevice.setSB(0x30);
-                channelDevice.setDB(Settings.sSUPERVISORMEMORYSTARTSATBLOCK);
-                channelDevice.setBC(0xFF);
-                channelDevice.setOS(0x0);
-                channelDevice.XCHG();
+                //channelDevice.setST(0x5); // Swap -> User mem
+                //channelDevice.setDT(0x1);
+                //channelDevice.setSB(0x15);
+                //channelDevice.setDB(0x30);
+                //channelDevice.setBC(0xFF);
+                //channelDevice.setOS(0x10);
+                //channelDevice.XCHG();
 
 
-                channelDevice.setST(0x2); // supervisor -> Output
-                channelDevice.setDT(0x3);
-                channelDevice.setSB(Settings.sSUPERVISORMEMORYSTARTSATBLOCK);
-                channelDevice.setDB(0);
-                channelDevice.setBC(0xFF);
-                channelDevice.setOS(0x0);
-                channelDevice.XCHG();
+                //channelDevice.setST(0x1); // User -> Supervisor
+                //channelDevice.setDT(0x2);
+                //channelDevice.setSB(0x30);
+                //channelDevice.setDB(Settings.sSUPERVISORMEMORYSTARTSATBLOCK);
+                //channelDevice.setBC(0xFF);
+                //channelDevice.setOS(0x0);
+                //channelDevice.XCHG();
 
 
-                channelDevice.setST(0x4); // User input -> user mem
-                channelDevice.setDT(0x1);
-                channelDevice.setSB(0);
-                channelDevice.setDB(55);
-                channelDevice.setBC(0xF);
-                channelDevice.setOS(0x0);
-                channelDevice.XCHG();
+                //channelDevice.setST(0x2); // supervisor -> Output
+                //channelDevice.setDT(0x3);
+                //channelDevice.setSB(Settings.sSUPERVISORMEMORYSTARTSATBLOCK);
+                //channelDevice.setDB(0);
+                //channelDevice.setBC(0xFF);
+                //channelDevice.setOS(0x0);
+                //channelDevice.XCHG();
+
+
+                //channelDevice.setST(0x4); // User input -> user mem
+                //channelDevice.setDT(0x1);
+                //channelDevice.setSB(0);
+                //channelDevice.setDB(55);
+                //channelDevice.setBC(0xF);
+                //channelDevice.setOS(0x0);
+                //channelDevice.XCHG();
 
                 channelDevice.setST(0x1); //  user mem -> output
                 channelDevice.setDT(0x3);
-                channelDevice.setSB(54);
-                channelDevice.setDB(55);
-                channelDevice.setBC(0xFFF);
+                channelDevice.setSB(0);
+                channelDevice.setDB(0);
+                channelDevice.setBC(0xF);
                 channelDevice.setOS(0x0);
                 channelDevice.XCHG();
 
@@ -115,22 +116,22 @@ namespace StackOperatingSystem.RealMachines
             //char[] regOS; // Offset of the position in the block for writing block.
         }
 
-        long getPTR()
+        public long getPTR()
         {
             return Conversion.convertHexToLong(regPTR);
         }
 
-        int getIC()
+        public int getIC()
         {
             return Conversion.convertHexToInt(regIC);
         }
 
-        long getSP()
+        public long getSP()
         {
             return Conversion.convertHexToLong(regSP);
         }
 
-        void setPTR(long ptr)
+        public void setPTR(long ptr)
         {
             char[] ptrToSetTo = Conversion.convertIntToHex(ptr);
             if (ptrToSetTo.Length > Settings.rPTRSIZE)
@@ -143,7 +144,7 @@ namespace StackOperatingSystem.RealMachines
             }
         }
 
-        void setIC(int ic)
+        public void setIC(int ic)
         {
             char[] icToSetTo = Conversion.convertIntToHex(ic);
             if (icToSetTo.Length > Settings.rICSIZE)
@@ -156,7 +157,7 @@ namespace StackOperatingSystem.RealMachines
             }
         }
 
-        void setSP(long sp)
+        public void setSP(long sp)
         {
             char[] spToSetTo = Conversion.convertIntToHex(sp);
             if (spToSetTo.Length > Settings.rSPSIZE)
@@ -169,32 +170,32 @@ namespace StackOperatingSystem.RealMachines
             }
         }
 
-        bool getIsSupervisor()
+        public bool getIsSupervisor()
         {
             return isSupervisor;
         }
 
-        void setIsSupervisor(bool isSupervisor)
+        public void setIsSupervisor(bool isSupervisor)
         { 
             this.isSupervisor = isSupervisor;
         }
 
-        int getPI()
+        public int getPI()
         {
             return Conversion.convertHexToInt(regPI);
         }
 
-        int getSI()
+        public int getSI()
         {
             return Conversion.convertHexToInt(regSI);
         }
 
-        int getTI()
+        public int getTI()
         {
             return Conversion.convertHexToInt(regTI);
         }
 
-        void setPI(int pi)
+        public void setPI(int pi)
         {
             char[] piToSetTo = Conversion.convertIntToHex(pi);
             if (piToSetTo.Length > Settings.sPISIZE)
@@ -207,7 +208,7 @@ namespace StackOperatingSystem.RealMachines
             }
         }
 
-        void setSI(int si)
+        public void setSI(int si)
         {
             char[] siToSetTo = Conversion.convertIntToHex(si);
             if (siToSetTo.Length > Settings.sSISIZE)
@@ -220,7 +221,7 @@ namespace StackOperatingSystem.RealMachines
             }
         }
 
-        void setTI(int ti)
+        public void setTI(int ti)
         {
             char[] tiToSetTo = Conversion.convertIntToHex(ti);
             if (tiToSetTo.Length > Settings.sPISIZE)
@@ -232,5 +233,6 @@ namespace StackOperatingSystem.RealMachines
                 regTI = tiToSetTo;
             }
         }
+
     }
 }

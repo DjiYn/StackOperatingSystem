@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace StackOperatingSystem.RealMachines
 {
-    class RealMemory
+    public class RealMemory
     {
         char[] rMemory;
 
