@@ -49,21 +49,21 @@ namespace StackOperatingSystem.RealMachines
         {
             try
             {
-                //channelDevice.setST(0x3); // HD -> Swap
-                //channelDevice.setDT(0x4);
-                //channelDevice.setSB(0x0);
-                //channelDevice.setDB(0x15);
-                //channelDevice.setBC(0xFF);
-                //channelDevice.setOS(0x10);
-                //channelDevice.XCHG();
+                channelDevice.setST(0x3); // HD -> Swap
+                channelDevice.setDT(0x4);
+                channelDevice.setSB(0x0);
+                channelDevice.setDB(0x15);
+                channelDevice.setBC(0xFF);
+                channelDevice.setOS(0x10);
+                channelDevice.XCHG();
 
-                //channelDevice.setST(0x5); // Swap -> User mem
-                //channelDevice.setDT(0x1);
-                //channelDevice.setSB(0x15);
-                //channelDevice.setDB(0x30);
-                //channelDevice.setBC(0xFF);
-                //channelDevice.setOS(0x10);
-                //channelDevice.XCHG();
+                channelDevice.setST(0x5); // Swap -> User mem
+                channelDevice.setDT(0x1);
+                channelDevice.setSB(0x15);
+                channelDevice.setDB(0x30);
+                channelDevice.setBC(0xFF);
+                channelDevice.setOS(0x10);
+                channelDevice.XCHG();
 
 
                 //channelDevice.setST(0x1); // User -> Supervisor
@@ -94,10 +94,10 @@ namespace StackOperatingSystem.RealMachines
 
                 channelDevice.setST(0x1); //  user mem -> output
                 channelDevice.setDT(0x3);
-                channelDevice.setSB(0);
+                channelDevice.setSB(0x30);
                 channelDevice.setDB(0);
-                channelDevice.setBC(0xF);
-                channelDevice.setOS(0x0);
+                channelDevice.setBC(0xFF);
+                channelDevice.setOS(0x20);
                 channelDevice.XCHG();
 
             } catch (Exception e)
