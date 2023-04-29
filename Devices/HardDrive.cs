@@ -20,7 +20,7 @@ namespace StackOperatingSystem.Devices
 
         public void loadData()
         {
-            string fileName = @"..\..\..\Devices\HardDrive.txt";
+            string fileName = @"..\..\..\Devices\HardDrive.txt"; // TODO - fix the filepath when launching with console command.
 
             if (File.Exists(fileName))
             {

@@ -1,0 +1,11 @@
+Sarasas bloku uzimtu, sarasas laisvu bloku.
+
+Implementuoti PagingMechanism inicializacija virtualiai masinai, t.y. alokuoti atminties vieta.
+
+Virtualioje masinoje implementuojamos oparacijos su kintamaisiais, nustatomi flagai realios masinos SF - status flag?
+
+Pasileidzia reali masina -> interaktyviai padaro (isjungia, paleidzia programa) -> VM uzkraunamas -> supervisorine uzkrauname ->
+supervizorines isskiriame kiek reikia atminties bloku -> uzkrauname programa i tuos isskirtus atminties blokus -> vykdymas programos iki programos
+pabaigos -> while bus vykdys VM komandas ADD, PUSH, POP (juos ivykdzius vyksta interuptai), jeigu interuptas einame i kita funkcija kurioje ir 
+apdorojame juos (ivedimai isvedimai, haltai ir t.t.) -> baigus darba grizta i realia masina.
+

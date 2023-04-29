@@ -27,5 +27,10 @@ namespace StackOperatingSystem.VirtualMachines
         {
             pagingMechanism.writeByte(index, data);
         }
+
+        public void allocateMemoryForVirtualMachine()
+        {
+            
+        }
     }
 }

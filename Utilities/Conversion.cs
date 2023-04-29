@@ -47,5 +47,55 @@ namespace StackOperatingSystem.Utilities
             return value;
         }
 
+        public static char[] convertToWord(char[] address)
+        {
+            char[] value = new char[Settings.rWORDSIZE];
+
+            if(address.Length < Settings.rWORDSIZE)
+            {
+                int j = 0;
+                for (int i = 0; i < Settings.rWORDSIZE; i++)
+                {
+                    if (i < Settings.rWORDSIZE - address.Length)
+                        value[i] = '0';
+                    else
+                    {
+                        value[i] = address[j];
+                        j++;
+                    }
+                }
+            } else
+            {
+                return address;
+            }
+
+            return value;
+        }
+
+        public static char[] convertToSPWord(char[] address)
+        {
+            char[] value = new char[Settings.vSPSIZE];
+
+            if (address.Length < Settings.vSPSIZE)
+            {
+                int j = 0;
+                for (int i = 0; i < Settings.vSPSIZE; i++)
+                {
+                    if (i < Settings.vSPSIZE - address.Length)
+                        value[i] = '0';
+                    else
+                    {
+                        value[i] = address[j];
+                        j++;
+                    }
+                }
+            }
+            else
+            {
+                return address;
+            }
+
+            return value;
+        }
     }
 }

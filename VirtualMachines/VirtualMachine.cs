@@ -17,6 +17,13 @@ namespace StackOperatingSystem.VirtualMachines
 
         public void run()
         {
+            Console.WriteLine("Virtual Machine starts!");
+
+            for(int i = 0; i < 255; i++)
+            {
+                Console.Write(vRAM.readByte(i));
+            }
+            
         }
 
 

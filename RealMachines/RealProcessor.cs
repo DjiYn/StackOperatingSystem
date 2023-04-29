@@ -36,11 +36,23 @@ namespace StackOperatingSystem.RealMachines
             regIC = new char[Settings.rICSIZE];
             regSP = new char[Settings.rSPSIZE];
 
-            isSupervisor = false;
+            isSupervisor = false; // 1 baito registras, kurio reikšmė nusako procesoriaus darbo režimą (vartotojas, supervizorius)
 
-            regPI = new char[Settings.sPISIZE];
-            regSI = new char[Settings.sSISIZE];
-            regTI = new char[Settings.sTISIZE];
+            regPI = new char[Settings.sPISIZE]; // 1 baito programinių pertraukimų registras
+
+            //1.neteisingas adresas(pi = 1)
+            //2.neteisingas operacijos kodas(pi = 2)
+            //3.neteisingas priskyrimas(pi = 3)
+            //4.neužtenka atminties(overflow)(pi = 4)
+            //5.dalyba iš nulio(pi= 5)
+
+            regSI = new char[Settings.sSISIZE]; // 1 baito supervizorinių pertraukimų registras
+
+            //1. GD(SI = 1) – Iš įvedimo srauto perskaito žodžių, kiek nurodyta stack’e ir įrašo į SP atminties vietą(adresą) iš kurios nuskaitė.
+            //2. PD(SI = 2) – Išsiunčia išvedimui žodžių, kiek nurodyta stack’e, iš stack’o atminties vietos.
+            //3. HALT(SI = 3) – Vartotojo programos vykdymo pabaiga.
+
+            regTI = new char[Settings.sTISIZE]; // 1 baito taimerio registras
 
             this.channelDevice = channelDevice;
         }
@@ -234,5 +246,6 @@ namespace StackOperatingSystem.RealMachines
             }
         }
 
+        
     }
 }

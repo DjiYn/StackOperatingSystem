@@ -8,9 +8,10 @@ namespace StackOperatingSystem
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Stack Operating System!");
+            
             RealMachine machine = new RealMachine();
-            machine.test();
+            //machine.test();
+            machine.StartStop();
             
         }
     }
