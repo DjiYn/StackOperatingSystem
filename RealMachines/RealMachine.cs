@@ -56,7 +56,7 @@ namespace StackOperatingSystem.RealMachines
 
         public void StartStop()
         {
-            loadHardDriveDataToSuperVisor();
+            loadHardDriveDataToSuperVisor(); // Preparing to load application to VM.
             while(true)
             {
                 int programToLaunch = operatingSystemMenu();

@@ -45,6 +45,11 @@ namespace StackOperatingSystem.VirtualMachines
             
         }
 
+        public void loadDataSegment(char[] data)
+        {
+
+        }
+
 
     }
 }
