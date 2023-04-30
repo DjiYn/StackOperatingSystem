@@ -6,22 +6,41 @@ namespace StackOperatingSystem.VirtualMachines
 {
     public class VirtualMachine
     {
-        VirtualMemory vRAM;
+        VirtualMemory vMemory;
         VirtualProcessor vProcessor;
+        int processIndex;
 
-        public VirtualMachine(PagingMechanism pagingMechanism)
+        public VirtualMachine(PagingMechanism pagingMechanism, int processIndex)
         {
-            this.vRAM = new VirtualMemory(pagingMechanism);
+            this.vMemory = new VirtualMemory(pagingMechanism, processIndex);
             this.vProcessor = new VirtualProcessor();
+            this.processIndex = processIndex;
+        }
+
+        public VirtualMemory getMemory()
+        {
+            return vMemory;
+        }
+
+        public VirtualProcessor getProcessor()
+        {
+            return vProcessor;
         }
 
         public void run()
         {
+            
             Console.WriteLine("Virtual Machine starts!");
 
             for(int i = 0; i < 255; i++)
             {
-                Console.Write(vRAM.readByte(i));
+                char[] data = vMemory.readWord("0000".ToCharArray());
+
+                foreach(char c in data)
+                {
+                    Console.Write(c);
+                }
+                Console.WriteLine();
             }
             
         }

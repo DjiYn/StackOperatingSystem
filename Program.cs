@@ -10,7 +10,6 @@ namespace StackOperatingSystem
         {
             
             RealMachine machine = new RealMachine();
-            //machine.test();
             machine.StartStop();
             
         }

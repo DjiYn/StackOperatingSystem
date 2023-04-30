@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -60,9 +61,9 @@ namespace StackOperatingSystem.RealMachines
             {
                 int programToLaunch = operatingSystemMenu();
                 Console.WriteLine("Launching the application... PRESS ENTER TO CONTINUE");
+                Console.ReadLine();
                 runApplication(programToLaunch);
-                createVirutualMachine();
-                //createVirutualMachine();
+                Console.WriteLine("Application finished running... PRESS ENTER TO CONTINUE");
                 Console.ReadLine();
             }
         }
@@ -101,35 +102,57 @@ namespace StackOperatingSystem.RealMachines
                 }
             }
         }
+
+        internal void runApplication(int programIndex)
+        {
+            
+            switch (programIndex)
+            {
+                case 1:
+                    createVirtualMachine();
+                    loadProgramToVirtualMachine(programIndex, virtualMachines.Count - 1);
+                    deleteVirtualMachine(virtualMachines.Count - 1);
+                    break;
+                case 2:
+                    break;
+                default:
+                    throw new Exception("No such application exists in HardDrive!");
+            }
+        }
+
         internal void loadHardDriveDataToSuperVisor()
         {
-            // LOAD THE APPLICATION TO USER MEMORY
-            rChannelDevice.setST(0x3); // HD -> User memory
-            rChannelDevice.setDT(0x1);
+            // LOAD THE APPLICATION TO SUPERVISOR MEMORY
+            rChannelDevice.setST(0x3); // HD -> Supervizor memory
+            rChannelDevice.setDT(0x2);
             rChannelDevice.setSB(0x0);
-            rChannelDevice.setDB(0);
+            rChannelDevice.setDB(Settings.sSUPERVISORMEMORYSTARTSATBLOCK);
             rChannelDevice.setBC(0x2FF);
             rChannelDevice.setOS(0x0);
             rChannelDevice.XCHG();
         }
 
-        public void test()
+        public void createVirtualMachine()
         {
-            rProcessor.test();
-            virtualMachines.Add(new VirtualMachine(rPagingMechanism));
-            ((VirtualMachine)virtualMachines[0]).run();
-        }
-
-       public void createVirutualMachine()
-       {
+            virtualMachines.Add(new VirtualMachine(rPagingMechanism, virtualMachines.Count));
             rPagingMechanism.allocateMemoryForVirtualMachine();
-
-            char[] result = rPagingMechanism.readWord("0003".ToCharArray());
-
-            rPagingMechanism.writeWord("0003".ToCharArray(), "BITE".ToCharArray()); 
-
-            printAllMemory();
         }
+
+        public void deleteVirtualMachine(int index)
+        {
+            rPagingMechanism.setCurrentlyUsedByVirtualMachineWithIndex(index);
+            rPagingMechanism.clearMemoryForVirtualMachine();
+            virtualMachines.RemoveAt(index);
+        }
+
+        public void loadProgramToVirtualMachine(int programIndex, int virtualMachineIndex)
+        {
+            VirtualMachine virtualMachine = ((VirtualMachine)virtualMachines[virtualMachineIndex]);
+            virtualMachine.run();
+            //
+
+        }
+        
 
         void printAllMemory()
         {

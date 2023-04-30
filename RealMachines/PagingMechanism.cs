@@ -16,11 +16,14 @@ namespace StackOperatingSystem.RealMachines
         List<int> pageTables;
         int totalNumberVirtualMachines;
 
+        int currentlyUsedByVirtualMachineWithIndex;
+
         public PagingMechanism(RealMemory rMemory)
         {
             rOccupiedMemoryBlocks = new List<bool>();
             pageTables = new List<int>();
             totalNumberVirtualMachines = 0;
+            currentlyUsedByVirtualMachineWithIndex = -1;
 
             if (rMemory != null)
             {
@@ -60,7 +63,7 @@ namespace StackOperatingSystem.RealMachines
             // Filling in paging table and marking blocks as taken.
             if (blockIndexToAllocate.Count == Settings.vBLOCKSWITHPAGETABLE)
             {
-                // Adding real address of new VM paging table
+                // Adding real address to new VM paging table
                 pageTables.Add(blockIndexToAllocate[blockIndexToAllocate.Count - 1]);
                 int newPageTableAddress = rMemory.getBlockIndex(pageTables[totalNumberVirtualMachines - 1]);
 
@@ -82,12 +85,38 @@ namespace StackOperatingSystem.RealMachines
             }
         }
 
+        public void clearMemoryForVirtualMachine()
+        {
+            int pageTableAddress = rMemory.getBlockIndex(pageTables[currentlyUsedByVirtualMachineWithIndex]);
+
+            for (int i = 0; i < Settings.rWORDSINBLOCK; i++)
+            {
+                char[] blockAddress = new char[Settings.rWORDSIZE];
+
+                blockAddress[0] = rMemory.readByte(pageTableAddress + i * Settings.rWORDSIZE + 0);
+                blockAddress[1] = rMemory.readByte(pageTableAddress + i * Settings.rWORDSIZE + 1);
+                blockAddress[2] = rMemory.readByte(pageTableAddress + i * Settings.rWORDSIZE + 2);
+                blockAddress[3] = rMemory.readByte(pageTableAddress + i * Settings.rWORDSIZE + 3);
+
+                if (blockAddress[0] == '0') 
+                {
+                    // TO DO - SWAP MEMORY CLEAR.
+                }
+                else
+                {
+                    rOccupiedMemoryBlocks[Conversion.convertHexToInt(blockAddress)] = false;
+                }
+            }
+
+            totalNumberVirtualMachines--;
+        }
+
         public char[] getRealAddress(char[] vAddress) 
         {
             char[] realAddress = new char[Settings.rPTRSIZE];
 
             // Get Page table Index to look through assigned pages word by word.
-            int pageTableAddressIndex = rMemory.getBlockIndex(pageTables[0]); // TO DO - change so it uses multiple page tables.
+            int pageTableAddressIndex = rMemory.getBlockIndex(pageTables[currentlyUsedByVirtualMachineWithIndex]); // TO DO - change so it uses multiple page tables.
 
             // Extracting the block address part from virtual address
             char[] virtualBlockIndex = getBlockAddressFromAddress(vAddress);
@@ -226,6 +255,11 @@ namespace StackOperatingSystem.RealMachines
             return word;
         }
 
+        public void setCurrentlyUsedByVirtualMachineWithIndex(int virtualMachineIndex)
+        {
+            currentlyUsedByVirtualMachineWithIndex = virtualMachineIndex;
+        }
+
 
         // Utilities for Paging mechanism
         public char[] fixAddress(char[] vAddress)
@@ -266,7 +300,7 @@ namespace StackOperatingSystem.RealMachines
             return realAddressIndex;
         }
 
-        char[] getBlockAddressFromAddress(char[] rAddress)
+        public char[] getBlockAddressFromAddress(char[] rAddress)
         {
             char[] rBlockAddress = new char[4];
             rBlockAddress[0] = rAddress[0];
@@ -277,7 +311,7 @@ namespace StackOperatingSystem.RealMachines
             return rBlockAddress;
         }
 
-        char[] getWordAddressFromAddress(char[] rAddress)
+        public char[] getWordAddressFromAddress(char[] rAddress)
         {
             char[] rWordAddress = new char[2];
             rWordAddress[0] = rAddress[4];
@@ -286,7 +320,7 @@ namespace StackOperatingSystem.RealMachines
             return rWordAddress;
         }
 
-        char[] getByteAddressFromAddress(char[] rAddress)
+        public char[] getByteAddressFromAddress(char[] rAddress)
         {
             char[] rByteAddress = new char[2];
             rByteAddress[0] = rAddress[6];

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace StackOperatingSystem.VirtualMachines
 {
-    internal class VirtualProcessor
+    public class VirtualProcessor
     {
         char[] regSP; // SP - Stack Pointer register
         char[] regIC; // IC - Program Counter register
@@ -25,39 +25,37 @@ namespace StackOperatingSystem.VirtualMachines
                 this.regIC[i] = '0';
         }
 
-        public long getSP()
+        public char[] getSP()
         {
-            return Conversion.convertHexToLong(regSP);
+            return regSP;
         }
 
-        public void setSP(long sp)
+        public void setSP(char[] sp)
         {
-            char[] spToSetTo = Conversion.convertIntToHex(sp);
-            if (spToSetTo.Length > Settings.rPTRSIZE)
+            if (sp.Length > Settings.vSPSIZE)
             {
                 throw new Exception("Overflowing register");
             }
             else
             {
-                regSP = spToSetTo;
+                regSP = sp;
             }
         }
 
-        public int getIC()
+        public char[] getIC()
         {
-            return Conversion.convertHexToInt(regIC);
+            return regIC;
         }
 
-        public void setIC(int ic)
+        public void setIC(char[] ic)
         {
-            char[] icToSetTo = Conversion.convertIntToHex(ic);
-            if (icToSetTo.Length > Settings.rICSIZE)
+            if (ic.Length > Settings.vICSIZE)
             {
                 throw new Exception("Overflowing register");
             }
             else
             {
-                regIC = icToSetTo;
+                regIC = ic;
             }
         }
 
