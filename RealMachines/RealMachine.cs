@@ -110,7 +110,9 @@ namespace StackOperatingSystem.RealMachines
             {
                 case 1:
                     createVirtualMachine();
+                    //printAllMemory();
                     loadProgramToVirtualMachine(programIndex, virtualMachines.Count - 1);
+                    
                     deleteVirtualMachine(virtualMachines.Count - 1);
                     break;
                 case 2:
@@ -149,7 +151,7 @@ namespace StackOperatingSystem.RealMachines
         {
             VirtualMachine virtualMachine = ((VirtualMachine)virtualMachines[virtualMachineIndex]);
             virtualMachine.run();
-            //
+            
 
         }
         
