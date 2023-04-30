@@ -160,6 +160,8 @@ namespace StackOperatingSystem.RealMachines
         {
             VirtualMachine virtualMachine = ((VirtualMachine)virtualMachines[virtualMachineIndex]);
             virtualMachine.run();
+            //
+
         }
         
 
