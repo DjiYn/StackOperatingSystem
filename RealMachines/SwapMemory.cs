@@ -36,7 +36,7 @@ namespace StackOperatingSystem.RealMachines
 
         public int getWordInBlockIndex(int indexBlock, int wordIndex)
         {
-            return getBlockIndex(indexBlock) + wordIndex;
+            return getBlockIndex(indexBlock) + wordIndex * Settings.ssWORDSIZE;
         }
 
         public int getByteInWordInBlockIndex(int indexBlock, int wordIndex, int byteIndex)

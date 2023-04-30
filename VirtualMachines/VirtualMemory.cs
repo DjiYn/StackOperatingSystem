@@ -20,17 +20,13 @@ namespace StackOperatingSystem.VirtualMachines
 
         public char readByte(int index)
         {
-            return pagingMechanism.readByte(index);
+            return pagingMechanism.readByte(Conversion.convertIntToHex(index));
         }
 
         public void writeByte(int index, char data)
         {
-            pagingMechanism.writeByte(index, data);
+            pagingMechanism.writeByte(Conversion.convertIntToHex(index), data);
         }
 
-        public void allocateMemoryForVirtualMachine()
-        {
-            
-        }
     }
 }

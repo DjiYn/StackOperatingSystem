@@ -41,7 +41,7 @@ namespace StackOperatingSystem.Devices
             {
                 return (char)reader.Read();
             }
-            return '\0';
+            return '?';
         }
     }
 }

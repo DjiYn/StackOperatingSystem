@@ -101,30 +101,13 @@ namespace StackOperatingSystem.RealMachines
                 }
             }
         }
-
-        internal void runApplication(int v)
-        {
-            //string buffer = "";
-            //for(int i = 0; i < 0xFF; i=i+4)
-            //{
-            //    buffer = rMemory.readByte(Settings.sSUPERVISORMEMORYSTARTS + i).ToString()
-            //           + rMemory.readByte(Settings.sSUPERVISORMEMORYSTARTS + i + 1).ToString()
-            //           + rMemory.readByte(Settings.sSUPERVISORMEMORYSTARTS + i + 2).ToString()
-            //           + rMemory.readByte(Settings.sSUPERVISORMEMORYSTARTS + i + 3).ToString();
-            //    Console.WriteLine(buffer);
-            //}
-
-
-
-        }
-
         internal void loadHardDriveDataToSuperVisor()
         {
-            // LOAD THE APPLICATION TO SUPERVISOR MEMORY
-            rChannelDevice.setST(0x3); // HD -> Supervizor memory
-            rChannelDevice.setDT(0x2);
+            // LOAD THE APPLICATION TO USER MEMORY
+            rChannelDevice.setST(0x3); // HD -> User memory
+            rChannelDevice.setDT(0x1);
             rChannelDevice.setSB(0x0);
-            rChannelDevice.setDB(Settings.sSUPERVISORMEMORYSTARTSATBLOCK);
+            rChannelDevice.setDB(0);
             rChannelDevice.setBC(0x2FF);
             rChannelDevice.setOS(0x0);
             rChannelDevice.XCHG();
@@ -141,37 +124,28 @@ namespace StackOperatingSystem.RealMachines
        {
             rPagingMechanism.allocateMemoryForVirtualMachine();
 
-            rChannelDevice.setST(0x1); //  user mem -> output
-            rChannelDevice.setDT(0x3);
-            rChannelDevice.setSB(255);
-            rChannelDevice.setDB(0);
-            rChannelDevice.setBC(0x3FC);
-            rChannelDevice.setOS(0x0);
-            rChannelDevice.XCHG();
+            char[] result = rPagingMechanism.readWord("0003".ToCharArray());
 
-            Console.WriteLine();
-            rChannelDevice.setST(0x2); // Supervizor memoryuser mem -> output
-            rChannelDevice.setDT(0x1);
-            rChannelDevice.setSB(Settings.sSUPERVISORMEMORYSTARTSATBLOCK);
-            rChannelDevice.setDB(0x0);
-            rChannelDevice.setBC(0x2FF);
-            rChannelDevice.setOS(0x0);
-            rChannelDevice.XCHG();
+            rPagingMechanism.writeWord("0003".ToCharArray(), "BITE".ToCharArray()); 
 
-            Console.WriteLine();
-            rChannelDevice.setST(0x1); //  user mem -> output
-            rChannelDevice.setDT(0x3);
-            rChannelDevice.setSB(0);
-            rChannelDevice.setDB(0);
-            rChannelDevice.setBC(0x3FF);
-            rChannelDevice.setOS(0x0);
-            rChannelDevice.XCHG();
-
-            Console.WriteLine();
-
-
-            rPagingMechanism.getRealAddress(0xF12);
-            rPagingMechanism.readByte(0);
+            printAllMemory();
         }
+
+        void printAllMemory()
+        {
+            for (int i = 0; i < Settings.rBLOCKS; i++)
+            {
+                Console.WriteLine("Block number: " + i);
+                rChannelDevice.setST(0x1); //  user mem -> output
+                rChannelDevice.setDT(0x3);
+                rChannelDevice.setSB(i);
+                rChannelDevice.setDB(0);
+                rChannelDevice.setBC(0x3FC);
+                rChannelDevice.setOS(0x0);
+                rChannelDevice.XCHG();
+                Console.WriteLine();
+            }
+        }
+
     }
 }
