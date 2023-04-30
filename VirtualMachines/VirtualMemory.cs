@@ -13,12 +13,14 @@ namespace StackOperatingSystem.VirtualMachines
     {
 
         PagingMechanism pagingMechanism;
+        VirtualProcessor vProcessor;
         int processIndex;
 
-        public VirtualMemory(PagingMechanism pagingMechanism, int processIndex) 
+        public VirtualMemory(PagingMechanism pagingMechanism, int processIndex, VirtualProcessor vProcessor) 
         {
             this.pagingMechanism = pagingMechanism;
             this.processIndex = processIndex;
+            this.vProcessor = vProcessor;
         }
 
         public char readByte(char[] vAddress)
@@ -45,11 +47,33 @@ namespace StackOperatingSystem.VirtualMachines
             pagingMechanism.writeWord(vAddress, data);
         }
 
-        public void pushToStack(char[] SP, char[] data)
+        public void pushToStack(char[] data)
         {
-            //char[] 
-            //pagingMechanism.setCurrentlyUsedByVirtualMachineWithIndex(processIndex);
-            //pagingMechanism.writeWord(vAddress, data);
+            int SPIndex = Conversion.convertHexToInt(vProcessor.getSP()) + 1;
+
+            if (SPIndex == 0xFFFF)
+                throw new Exception("Not enougth memory in stack!");
+
+            if (data.Length != Settings.vWORDSIZE)
+                throw new Exception("You can only push a word to stack!");
+
+            writeWord(vProcessor.getSP(), data);
+
+            vProcessor.setSP(Conversion.convertIntToHex(SPIndex));
+        }
+
+        public char[] popFromStack()
+        {
+            int SPIndex = Conversion.convertHexToInt(vProcessor.getSP()) - 1;
+
+            if (SPIndex < 0xC800)
+                throw new Exception("There is nothing inside the Stack!");
+
+            char[] data = readWord(vProcessor.getSP());
+
+            vProcessor.setSP(Conversion.convertIntToHex(SPIndex));
+
+            return data;
         }
 
     }

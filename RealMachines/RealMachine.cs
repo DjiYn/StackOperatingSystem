@@ -110,7 +110,9 @@ namespace StackOperatingSystem.RealMachines
             {
                 case 1:
                     createVirtualMachine();
+                    
                     loadProgramToVirtualMachine(programIndex, virtualMachines.Count - 1);
+                    //printAllMemory();
                     deleteVirtualMachine(virtualMachines.Count - 1);
                     break;
                 case 2:
@@ -127,6 +129,15 @@ namespace StackOperatingSystem.RealMachines
             rChannelDevice.setDT(0x2);
             rChannelDevice.setSB(0x0);
             rChannelDevice.setDB(Settings.sSUPERVISORMEMORYSTARTSATBLOCK);
+            rChannelDevice.setBC(0x2FF);
+            rChannelDevice.setOS(0x0);
+            rChannelDevice.XCHG();
+
+            // TO DO - needs to properly get the program's block which starts from $AMJ and ends with $END.
+            rChannelDevice.setST(0x2); // Supervizor -> User memory
+            rChannelDevice.setDT(0x1);
+            rChannelDevice.setSB(Settings.sSUPERVISORMEMORYSTARTSATBLOCK);
+            rChannelDevice.setDB(0);
             rChannelDevice.setBC(0x2FF);
             rChannelDevice.setOS(0x0);
             rChannelDevice.XCHG();
@@ -149,14 +160,12 @@ namespace StackOperatingSystem.RealMachines
         {
             VirtualMachine virtualMachine = ((VirtualMachine)virtualMachines[virtualMachineIndex]);
             virtualMachine.run();
-            //
-
         }
         
 
         void printAllMemory()
         {
-            for (int i = 0; i < Settings.rBLOCKS; i++)
+            for (int i = 0; i < 256; i++)
             {
                 Console.WriteLine("Block number: " + i);
                 rChannelDevice.setST(0x1); //  user mem -> output

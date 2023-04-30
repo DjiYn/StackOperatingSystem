@@ -58,6 +58,7 @@ namespace StackOperatingSystem
         public static int vWORDSINBLOCK = 0xFF;
         public static int vWORDSIZE = 0x4;
         public static int vMEMORYSIZE = vBLOCKS * vWORDSINBLOCK * vWORDSIZE; // Total memory that 1 VM can have.
+        public static int vSTACKSTARTSATBLOCK = 0xC8;
 
         public static int vBLOCKSWITHPAGETABLE = vBLOCKS + 1;
 
