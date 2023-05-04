@@ -64,10 +64,10 @@ namespace StackOperatingSystem.VirtualMachines
 
         public char[] popFromStack()
         {
-            int SPIndex = Conversion.convertHexToInt(vProcessor.getSP()) - 1;
+            int SPIndex = Conversion.convertHexToInt(vProcessor.getSP()) -1;
 
-            if (SPIndex < 0xC800)
-                throw new Exception("There is nothing inside the Stack!");
+            //if (SPIndex < 0xC800)
+              //  throw new Exception("There is nothing inside the Stack!");
 
             char[] data = readWord(vProcessor.getSP());
 
